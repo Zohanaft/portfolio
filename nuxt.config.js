@@ -46,6 +46,15 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
+    breakpoint: {
+      thresholds: {
+        xs: 340,
+        sm: 540,
+        md: 830,
+        lg: 1200
+      },
+      scrollBarWidth: 0
+    },
     theme: {
       light: true,
       themes: {
