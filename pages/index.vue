@@ -44,6 +44,12 @@
               v-model="selectedProjectTags"
               :tags="projectTags"
             />
+            <YearSort
+              v-model="year"
+              class="pb-3"
+              :year-list="yearList"
+              right
+            />
           </div>
         </v-col>
         <v-col
@@ -226,7 +232,15 @@ export default {
         }
       ],
       selectedProjectTags: [],
-      selectedNoteTags: []
+      selectedNoteTags: [],
+      year: '2020',
+      yearList: [
+        '2021',
+        '2020',
+        '2019',
+        '2018',
+        '2017'
+      ]
     }
   },
   methods: {

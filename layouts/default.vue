@@ -83,7 +83,7 @@
       color="secondary darken-1"
     >
       <div class="logo--wrapper container pa-0">
-        <v-row class="mx-sm-n3 mx-0">
+        <v-row class="mx-sm-n3 mx-0 ma-0">
           <v-col
             class="logo--image-wrapper col-12 col-xl-3 py-0"
           >
