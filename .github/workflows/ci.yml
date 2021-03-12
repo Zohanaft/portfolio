@@ -16,5 +16,4 @@ jobs:
       run: yarn run generate
     
     - name: Deploy
-        with:
-          publish_dir: ./dist
+        publish_dir: ./dist
