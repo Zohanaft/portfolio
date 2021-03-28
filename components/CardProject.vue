@@ -1,5 +1,8 @@
 <template>
-  <a class="card-project mx-sm-auto">
+  <nuxt-link
+    class="card-project mx-sm-auto"
+    :to="project.slug"
+  >
     <div class="card-project--header d-flex">
       <h2 class="card-project--title d-flex">
         {{ project.title }}
@@ -10,11 +13,12 @@
     </div>
     <div class="card-project--image">
       <v-img
-        :src="require('@/assets/img/card-project/36.png')"
+        :src="project.image"
+        style="height: 353px;"
         position="center center"
       />
     </div>
-  </a>
+  </nuxt-link>
 </template>
 
 <script>
@@ -32,13 +36,15 @@ export default {
 <style lang="scss" scoped>
 .card-project {
   max-width: 370px;
+  max-height: 447px;
+  height: 100%;
   padding: 16px;
   border: solid 1px $color-dark;
   transition: all .5s ease-in-out;
   display: block;
   margin-bottom: 10px;
 
-  @media (min-width: 540px) {
+  @media (min-width: 800px) {
     margin-bottom: 30px;
   }
 
@@ -69,6 +75,11 @@ export default {
 
   &--year {
     color: $color-gray;
+  }
+
+  &--image {
+    max-height: 353px;
+    display: flex;
   }
 }
 </style>

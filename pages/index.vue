@@ -53,7 +53,7 @@
           </div>
         </v-col>
         <v-col
-          v-for="(project, index) in projects"
+          v-for="(project, index) in items"
           :key="index"
           cols="12"
           class="col-md-6 col-lg-4 py-0 justify-sm-center"
@@ -93,6 +93,7 @@
         class="mx-md-n3 mx-0"
       >
         <v-col
+          v-if="notes"
           class="py-0 pb-5 section-wrapper"
           cols="12"
         >
@@ -107,13 +108,14 @@
           </div>
         </v-col>
         <v-col
-          v-for="(note, index) in notes"
+          v-for="(note, index) in 3"
           :key="index"
           cols="12"
           class="col-lg-6 col-xl-4 py-0 px-0 px-md-3 justify-sm-center"
         >
           <CardNotes
-            :note="note"
+            v-if="notes[index]"
+            :note="notes[index]"
           />
         </v-col>
         <v-col
@@ -133,6 +135,12 @@
 
 <script>
 
+import {
+  mapState,
+  mapActions,
+  mapGetters
+} from 'vuex'
+
 export default {
   name: 'Projects',
   data: () => {
@@ -141,110 +149,92 @@ export default {
         '[ Сайты ]',
         '[ Соц. сети ]'
       ],
-      projects: [
-        {
-          title: 'Северная Сказка',
-          year: '2020',
-          img: '@/assets/img/card-project/36.png'
-        },
-        {
-          title: 'Северная Сказка',
-          year: '2020',
-          img: '@/assets/img/card-project/36.png'
-        },
-        {
-          title: 'Северная Сказка',
-          year: '2020',
-          img: '@/assets/img/card-project/36.png'
-        },
-        {
-          title: 'Северная Сказка',
-          year: '2020',
-          img: '@/assets/img/card-project/36.png'
-        },
-        {
-          title: 'Северная Сказка',
-          year: '2020',
-          img: '@/assets/img/card-project/36.png'
-        },
-        {
-          title: 'Северная Сказка',
-          year: '2020',
-          img: '@/assets/img/card-project/36.png'
-        }
-      ],
       noteTags: [
         '[ Дизайн ]',
         '[ Маркетинг ]'
       ],
-      notes: [
-        {
-          title: 'Дизайн кнопок по гороскопу',
-          year: '2020',
-          img: '@/assets/img/card-notes/10.png',
-          tags: ['Дизайн', 'Маркетинг'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            },
-            {
-              name: 'tw',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'Дизайн кнопок по гороскопу',
-          year: '2020',
-          img: '@/assets/img/card-notes/10.png',
-          tags: ['Дизайн', 'Маркетинг'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        }
-      ],
       selectedProjectTags: [],
-      selectedNoteTags: [],
-      year: '2020',
-      yearList: [
-        '2021',
-        '2020',
-        '2019',
-        '2018',
-        '2017'
-      ]
+      selectedNoteTags: []
     }
   },
+  computed: {
+    ...mapState('pages', {
+      yearList: state => state.yearList,
+      tags: state => state.tags,
+      items: state => state.items
+    }),
+    ...mapState('notes', {
+      notes: state => state.items
+    }),
+    ...mapGetters('pages', [
+      'getYear',
+      'getLimit',
+      'getOffset',
+      'getStep'
+    ]),
+    year: {
+      get () {
+        return this.getYear
+      },
+      set (val) {
+        this.setYear(val)
+      }
+    },
+    limit: {
+      get () {
+        return this.getLimit
+      },
+      set (val) {
+        this.setLimit(val)
+      }
+    },
+    offset: {
+      get () {
+        return this.getOffset
+      },
+      set (val) {
+        this.setOffset(val)
+      }
+    },
+    step () {
+      return this.getStep
+    }
+  },
+  watch: {
+    year (val) {
+      this.setYear(val)
+    },
+    selectedProjectTags: {
+      handler (val) {
+        this.setTags(val)
+      },
+      deep: true
+    },
+    selectedNoteTags: {
+      handler (val) {
+        this.$store.dispatch('notes/setTags', val)
+      },
+      deep: true
+    }
+  },
+  mounted () {
+    this.init()
+    this.$store.dispatch('notes/init')
+  },
   methods: {
+    ...mapActions('pages', [
+      'init',
+      'setYear',
+      'setTags',
+      'setLimit',
+      'setOffset',
+      'updateItems'
+    ]),
+    ...mapActions('notes', [
+      'init3'
+    ]),
     loadMore () {
+      this.offset += this.step
     }
   }
 }

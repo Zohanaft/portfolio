@@ -21,12 +21,12 @@
             </h2>
             <TagList
               v-model="selectedNoteTags"
-              :tags="notesTags"
+              :tags="noteTags"
             />
           </div>
         </v-col>
         <v-col
-          v-for="(note, index) in notes"
+          v-for="(note, index) in items"
           :key="index"
           cols="12"
           class="col-md-6 col-lg-4 py-0 justify-sm-center"
@@ -41,226 +41,130 @@
         >
           <TagList
             v-model="selectedNoteTags"
-            :tags="notesTags"
+            :tags="noteTags"
           />
           <Button
             class="pl-5"
             :title="$vuetify.breakpoint.smAndDown ? '[ Загрузить ]' : '[ Загрузить еще ]'"
+            @click="loadMore()"
           />
         </v-col>
+        <!--
+        <v-col
+          v-for="(project, index) in 3"
+          :key="index"
+          cols="12"
+          class="col-md-6 col-lg-4 py-0 justify-sm-center"
+        >
+          <CardProject
+            :project="projects[index]"
+          />
+        </v-col>
+        -->
       </v-row>
     </v-container>
   </v-container>
 </template>
 
 <script>
+
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
+
 export default {
   name: 'PageNotes',
-  data () {
+  data: () => {
     return {
-      notesTags: [
+      projectTags: [
+        '[ Сайты ]',
+        '[ Соц. сети ]'
+      ],
+      noteTags: [
         '[ Дизайн ]',
         '[ Маркетинг ]'
       ],
-      selectedNoteTags: [],
-      notes: [
-        {
-          title: 'Дизайн кнопок по гороскопу',
-          year: '2020',
-          img: '@/assets/img/card-notes/10.png',
-          tags: ['Дизайн', 'Маркетинг'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            },
-            {
-              name: 'tw',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'О том, как собеседование шло',
-          year: '2020',
-          img: '@/assets/img/card-notes/11.png',
-          tags: ['Дизайн'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        },
-        {
-          title: 'Дизайн кнопок по гороскопу',
-          year: '2020',
-          img: '@/assets/img/card-notes/10.png',
-          tags: ['Дизайн', 'Маркетинг'],
-          social: [
-            {
-              name: 'Vk',
-              to: '#'
-            },
-            {
-              name: 'fb',
-              to: '#'
-            }
-          ]
-        }
-      ]
+      selectedProjectTags: [],
+      selectedNoteTags: []
+    }
+  },
+  computed: {
+    ...mapState('notes', {
+      yearList: state => state.yearList,
+      tags: state => state.tags,
+      items: state => state.items
+    }),
+    ...mapState('pages', {
+      projects: state => state.items
+    }),
+    ...mapGetters('notes', [
+      'getYear',
+      'getLimit',
+      'getOffset',
+      'getStep'
+    ]),
+    year: {
+      get () {
+        return this.getYear
+      },
+      set (val) {
+        this.setYear(val)
+      }
+    },
+    limit: {
+      get () {
+        return this.getLimit
+      },
+      set (val) {
+        this.setLimit(val)
+      }
+    },
+    offset: {
+      get () {
+        return this.getOffset
+      },
+      set (val) {
+        this.setOffset(val)
+      }
+    },
+    step () {
+      return this.getStep
+    }
+  },
+  watch: {
+    year (val) {
+      this.setYear(val)
+    },
+    selectedNoteTags: {
+      handler (val) {
+        this.setTags(val)
+      },
+      deep: true
+    },
+    selectedProjectTags: {
+      handler (val) {
+        this.$store.dispatch('pages/setTags', val)
+      },
+      deep: true
+    }
+  },
+  mounted () {
+    this.init()
+    // this.$store.dispatch('pages/init')
+  },
+  methods: {
+    ...mapActions('notes', [
+      'init',
+      'setYear',
+      'setTags',
+      'setLimit',
+      'setOffset',
+      'updateItems'
+    ]),
+    loadMore () {
+      this.offset += this.step
     }
   }
 }

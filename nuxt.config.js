@@ -12,7 +12,6 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
   target: 'static',
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -41,8 +40,12 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/style-resources'
   ],
+
+  axios: {
+  },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
