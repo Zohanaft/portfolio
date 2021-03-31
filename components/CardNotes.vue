@@ -168,7 +168,7 @@ export default {
       letter-spacing: 0.02em;
       font-weight: 400px;
       color: $color-light-gray;
-      padding-left: 20px;
+      padding-right: 20px;
 
       &:first-child {
         padding-left: 0px;
