@@ -4,7 +4,12 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _9eaf0dfe = () => interopDefault(import('..\\node_modules\\@nuxt\\vue-app\\template\\pages\\index.vue' /* webpackChunkName: "" */))
+const _74a64b55 = () => interopDefault(import('..\\pages\\catalog\\index.vue' /* webpackChunkName: "pages/catalog/index" */))
+const _41d77bac = () => interopDefault(import('..\\pages\\expirience.vue' /* webpackChunkName: "pages/expirience" */))
+const _cb3bfb96 = () => interopDefault(import('..\\pages\\notes.vue' /* webpackChunkName: "pages/notes" */))
+const _31f367a7 = () => interopDefault(import('..\\pages\\catalog\\_catalog.vue' /* webpackChunkName: "pages/catalog/_catalog" */))
+const _01e52874 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _67ceb062 = () => interopDefault(import('..\\pages\\_page.vue' /* webpackChunkName: "pages/_page" */))
 
 const emptyFn = () => {}
 
@@ -18,8 +23,29 @@ export const routerOptions = {
   scrollBehavior,
 
   routes: [{
-    path: "",
-    component: _9eaf0dfe
+    path: "/catalog",
+    component: _74a64b55,
+    name: "catalog"
+  }, {
+    path: "/expirience",
+    component: _41d77bac,
+    name: "expirience"
+  }, {
+    path: "/notes",
+    component: _cb3bfb96,
+    name: "notes"
+  }, {
+    path: "/catalog/:catalog",
+    component: _31f367a7,
+    name: "catalog-catalog"
+  }, {
+    path: "/",
+    component: _01e52874,
+    name: "index"
+  }, {
+    path: "/:page",
+    component: _67ceb062,
+    name: "page"
   }],
 
   fallback: false

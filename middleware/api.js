@@ -37,7 +37,8 @@ export class Request {
 export class Api extends Request {
   constructor (requestObject = {}) {
     super(requestObject)
-    this.location = document.location.origin + '/api/'
+    // prod this.location = document.location.origin + '/api/'
+    this.location = 'http://roniursu/api/'
   }
 
   getLocation () {

@@ -1,6 +1,4 @@
-const laravelNuxt = require('laravel-nuxt')
-
-module.exports = laravelNuxt({
+export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - portfolio',
@@ -83,4 +81,4 @@ module.exports = laravelNuxt({
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
   }
-})
+}

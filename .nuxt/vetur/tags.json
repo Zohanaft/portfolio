@@ -1,1 +1,32 @@
-{}
+{
+  "Button": {
+    "description": "Auto imported from components/Button.vue"
+  },
+  "LazyButton": {
+    "description": "Auto imported from components/Button.vue"
+  },
+  "CardNotes": {
+    "description": "Auto imported from components/CardNotes.vue"
+  },
+  "LazyCardNotes": {
+    "description": "Auto imported from components/CardNotes.vue"
+  },
+  "CardProject": {
+    "description": "Auto imported from components/CardProject.vue"
+  },
+  "LazyCardProject": {
+    "description": "Auto imported from components/CardProject.vue"
+  },
+  "TagList": {
+    "description": "Auto imported from components/TagList.vue"
+  },
+  "LazyTagList": {
+    "description": "Auto imported from components/TagList.vue"
+  },
+  "YearSort": {
+    "description": "Auto imported from components/YearSort.vue"
+  },
+  "LazyYearSort": {
+    "description": "Auto imported from components/YearSort.vue"
+  }
+}

@@ -1,32 +1,11 @@
+export { default as Button } from '../..\\components\\Button.vue'
+export { default as CardNotes } from '../..\\components\\CardNotes.vue'
+export { default as CardProject } from '../..\\components\\CardProject.vue'
+export { default as TagList } from '../..\\components\\TagList.vue'
+export { default as YearSort } from '../..\\components\\YearSort.vue'
 
-
-// nuxt/nuxt.js#8607
-export function wrapFunctional(options) {
-  if (!options || !options.functional) {
-    return options
-  }
-
-  const propKeys = Array.isArray(options.props) ? options.props : Object.keys(options.props || {})
-
-  return {
-    render(h) {
-      const attrs = {}
-      const props = {}
-
-      for (const key in this.$attrs) {
-        if (propKeys.includes(key)) {
-          props[key] = this.$attrs[key]
-        } else {
-          attrs[key] = this.$attrs[key]
-        }
-      }
-
-      return h(options, {
-        on: this.$listeners,
-        attrs,
-        props,
-        scopedSlots: this.$scopedSlots,
-      }, this.$slots.default)
-    }
-  }
-}
+export const LazyButton = import('../..\\components\\Button.vue' /* webpackChunkName: "components_Button" */).then(c => c.default || c)
+export const LazyCardNotes = import('../..\\components\\CardNotes.vue' /* webpackChunkName: "components_CardNotes" */).then(c => c.default || c)
+export const LazyCardProject = import('../..\\components\\CardProject.vue' /* webpackChunkName: "components_CardProject" */).then(c => c.default || c)
+export const LazyTagList = import('../..\\components\\TagList.vue' /* webpackChunkName: "components_TagList" */).then(c => c.default || c)
+export const LazyYearSort = import('../..\\components\\YearSort.vue' /* webpackChunkName: "components_YearSort" */).then(c => c.default || c)

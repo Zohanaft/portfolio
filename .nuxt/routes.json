@@ -1,8 +1,44 @@
 [
   {
-    "name": "",
-    "path": "",
-    "component": "C:\\\\Users\\\\Zakreas\\\\Desktop\\\\projects\\\\portfolio\\\\node_modules\\\\@nuxt\\\\vue-app\\\\template\\\\pages\\\\index.vue",
-    "_name": "_9eaf0dfe"
+    "name": "catalog",
+    "path": "/catalog",
+    "component": "C:\\\\Users\\\\Zakreas\\\\Desktop\\\\projects\\\\portfolio\\\\pages\\\\catalog\\\\index.vue",
+    "chunkName": "pages/catalog/index",
+    "_name": "_74a64b55"
+  },
+  {
+    "name": "expirience",
+    "path": "/expirience",
+    "component": "C:\\\\Users\\\\Zakreas\\\\Desktop\\\\projects\\\\portfolio\\\\pages\\\\expirience.vue",
+    "chunkName": "pages/expirience",
+    "_name": "_41d77bac"
+  },
+  {
+    "name": "notes",
+    "path": "/notes",
+    "component": "C:\\\\Users\\\\Zakreas\\\\Desktop\\\\projects\\\\portfolio\\\\pages\\\\notes.vue",
+    "chunkName": "pages/notes",
+    "_name": "_cb3bfb96"
+  },
+  {
+    "name": "catalog-catalog",
+    "path": "/catalog/:catalog",
+    "component": "C:\\\\Users\\\\Zakreas\\\\Desktop\\\\projects\\\\portfolio\\\\pages\\\\catalog\\\\_catalog.vue",
+    "chunkName": "pages/catalog/_catalog",
+    "_name": "_31f367a7"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\Zakreas\\\\Desktop\\\\projects\\\\portfolio\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_01e52874"
+  },
+  {
+    "name": "page",
+    "path": "/:page",
+    "component": "C:\\\\Users\\\\Zakreas\\\\Desktop\\\\projects\\\\portfolio\\\\pages\\\\_page.vue",
+    "chunkName": "pages/_page",
+    "_name": "_67ceb062"
   }
 ]
