@@ -2,33 +2,16 @@ import { Api } from '~/middleware/api'
 
 export const state = () => ({
   items: [],
+
   offset: 0,
   limit: 10,
   step: 10,
-  yearList: [
-    '---',
-    '2012',
-    '2013',
-    '2014',
-    '2015',
-    '2016',
-    '2017',
-    '2018',
-    '2019',
-    '2020',
-    '2021'
-  ],
+
+  yearList: ['---'],
   year: '---',
-  tags: new Map([
-    ['[ Сайты ]', 'sites'],
-    ['[ Маркетинг ]', 'marc'],
-    ['[ Соц. сети ]', 'social'],
-    ['[ Дизайн ]', 'design'],
-    ['sites', '[ Сайты ]'],
-    ['marc', '[ маркетинг ]'],
-    ['social', '[ Соц. сети ]'],
-    ['design', '[ Дизайн ]']
-  ]),
+
+  tags: [],
+
   selectedProjectTags: [],
   page: null
 })
@@ -121,8 +104,7 @@ export const actions = {
       .get(
         new Api({
           __limit: state.limit,
-          __offset: state.offset,
-          type: 'PROJECT'
+          __offset: state.offset
         }).genUrl('pages')
       )
     commit('init', { items: items.data.data })

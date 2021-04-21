@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
+    "build": "nuxt build --spa",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate --spa",
+    "laravel:dev": "laravel-nuxt dev",
+    "laravel:build": "laravel-nuxt build"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
@@ -23,6 +25,7 @@
     "eslint": "^7.10.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "fibers": "^5.0.0",
+    "laravel-nuxt": "^2.0.2",
     "sass": "^1.30.0",
     "sass-loader": "8",
     "vuetify-loader": "^1.6.0"

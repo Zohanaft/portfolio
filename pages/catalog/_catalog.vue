@@ -37,8 +37,8 @@
           </h2>
           <!--
           <TagList
-            v-model="selectedTags"
-            :tags="tags"
+            v-model="selectedProjectTags"
+            :tags="projectTags"
           />
           -->
           <!--
@@ -104,8 +104,7 @@ export default {
   },
   async created () {
     this.setCollection({ collection: this.group.title })
-    this.setTags({ tags: this.group.tags.split(',') })
-
+    this.setTags({ tags: this.group.tags })
     await this.initCatalog()
   },
   methods: {

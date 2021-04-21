@@ -35,9 +35,8 @@
         <ul>
           <li>
             <a
-              v-if="note.social_fb"
-              :href="note.social_fb"
-              @click.prevent="linkTo(note.social_fb)"
+              :href="`http://www.facebook.com/sharer.php?s=100&p[url]=${location}/${note.slug}`"
+              @click.prevent="linkTo(`http://www.facebook.com/sharer.php?s=100&p[url]=${location}/${note.slug}`)"
             >
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="29" height="29" stroke="#00D1FF" />
@@ -47,9 +46,8 @@
           </li>
           <li>
             <a
-              v-if="note.social_vk"
-              :href="note.social_vk"
-              @click.prevent="linkTo(note.social_vk)"
+              :href="`https://vk.com/share.php?url=${location}/${note.slug}`"
+              @click.prevent="linkTo(`https://vk.com/share.php?url=${location}/${note.slug}`)"
             >
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="29" height="29" stroke="#00D1FF" />
@@ -59,9 +57,8 @@
           </li>
           <li>
             <a
-              v-if="note.social_tw"
-              :href="note.social_tw"
-              @click.prevent="linkTo(note.social_tw)"
+              :href="`http://twitter.com/share?text=${location}/${note.slug}`"
+              @click.prevent="linkTo(`http://twitter.com/share?text=${location}/${note.slug}`)"
             >
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="29" height="29" stroke="#00D1FF" />
@@ -89,7 +86,10 @@ export default {
   computed: {
     ...mapGetters('notes', [
       'tagList'
-    ])
+    ]),
+    location () {
+      return document.location.origin
+    }
   },
   methods: {
     tag (tag) {
@@ -168,7 +168,7 @@ export default {
       letter-spacing: 0.02em;
       font-weight: 400px;
       color: $color-light-gray;
-      padding-left: 20px;
+      padding-right: 20px;
 
       &:first-child {
         padding-left: 0px;

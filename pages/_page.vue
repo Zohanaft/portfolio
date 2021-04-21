@@ -22,7 +22,7 @@
           </span>
         </v-col>
         <v-col
-          class="pa-0 pt-0 d-flex felx-row flex-wrap align-center"
+          class="pa-0 pt-0 d-flex felx-row flex-wrap align-start"
           tag="section"
           cols="12"
         >
@@ -78,28 +78,41 @@
             </div>
           </div>
         </v-col>
+        <!--
         <v-col
           tag="section"
-          class="pa-0"
+          class="pa-0 pt-10"
           cols="12"
         >
           {{ page.excerpt }}
         </v-col>
+        -->
         <v-col
           ref="body"
-          class="pa-0"
+          class="pa-0 pt-10 pb-10"
           tag="section"
           cols="12"
         />
         <v-container
           v-if="$vuetify.breakpoint.mdAndUp"
-          class="section-divider py-0"
+          class="pa-0 section-divider py-0"
           fluid
           tag="div"
         />
         <v-col
+          class="pa-0 pt-5"
+        >
+          <span
+            v-for="(tagname, index) in JSON.parse(page.tags)"
+            :key="index"
+            class="tag-list--item"
+          >
+            {{ tag(tagname) }}
+          </span>
+        </v-col>
+        <v-col
           cols="12"
-          class="pa-0 pt-16"
+          class="pa-0 pt-10"
         >
           <h2 class="page-text--title d-flex">
             Другие проекты
@@ -107,7 +120,7 @@
         </v-col>
         <v-col
           cols="12"
-          class="pa-0 d-flex flex-row flex-wrap pt-5"
+          class="pa-0 d-flex flex-row flex-wrap"
         >
           <v-col
             v-for="(item, index) in 3"
@@ -163,7 +176,8 @@ export default {
   },
   computed: {
     ...mapState('pages', {
-      items: state => state.items
+      items: state => state.items,
+      tagList: state => state.tags
     })
   },
   mounted () {
@@ -174,11 +188,15 @@ export default {
         }
       }
     )
+    this.$refs.body.innerHTML = this.page.body
   },
   methods: {
     ...mapActions('pages', [
       'customQuery'
-    ])
+    ]),
+    tag (tag) {
+      return this.tagList.get(tag)
+    }
   }
 }
 </script>
@@ -189,6 +207,11 @@ export default {
   margin-right: 0px;
 }
 
+::v-deep .card-project {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
 .page-type {
   font-weight: 500;
   font-size: 20px;
@@ -197,7 +220,7 @@ export default {
 }
 
 .page-text--title {
-  line-height: 40px;
+  line-height: 90px;
 }
 
 .page {

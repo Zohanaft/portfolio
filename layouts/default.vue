@@ -18,27 +18,35 @@
           <v-col
             class="logo--image-wrapper col-12 col-xl-3 py-0"
           >
-            <v-sheet
-              class="logo--image mx-auto mr-xl-auto mx-xl-0 ma-0 mt-xl-15 mb-xl-15 mt-10 mb-5"
-              min-width="230px"
-              max-width="230px"
-              width="230px"
-              height="230px"
-              color="accent"
-              style="box-shadow: 0px 0px 20px #00D1FF;"
+            <nuxt-link
+              to="/"
             >
-              <div class="logo--description">
-                рони<br>
-                УРСУ
-              </div>
-            </v-sheet>
+              <v-sheet
+                class="logo--image mx-auto mr-xl-auto mx-xl-0 ma-0 mt-xl-15 mb-xl-15 mt-10 mb-5"
+                min-width="230px"
+                max-width="230px"
+                width="230px"
+                height="230px"
+                color="accent"
+                style="box-shadow: 0px 0px 20px #00D1FF;"
+              >
+                <div class="logo--description">
+                  рони<br>
+                  УРСУ
+                </div>
+              </v-sheet>
+            </nuxt-link>
           </v-col>
           <v-col
             class="logo--title mt-xl-15 mt-0 col-12 col-xl-9 py-0"
             color="light darken-1"
           >
-            UX-аналитика, <br>
-            UX/UI-дизайн сайтов
+            <nuxt-link
+              to="/"
+            >
+              UX-аналитика, <br>
+              UX/UI-дизайн сайтов
+            </nuxt-link>
           </v-col>
           <v-col
             tag="nav"
@@ -49,25 +57,20 @@
               <li>
                 <nuxt-link
                   class="header--navbar-item"
-                  to="/"
-                >
-                  Проекты
-                </nuxt-link>
-              </li>
-              <li>
-                <nuxt-link
-                  class="header--navbar-item"
                   to="/expirience"
                 >
                   Опыт работы
                 </nuxt-link>
               </li>
-              <li>
+              <li
+                v-for="(group, index) in groups"
+                :key="index"
+              >
                 <nuxt-link
+                  :to="`/catalog/${group.id}`"
                   class="header--navbar-item"
-                  to="/notes"
                 >
-                  Заметки
+                  {{ group.title }}
                 </nuxt-link>
               </li>
             </ul>
@@ -75,7 +78,7 @@
         </v-row>
       </v-container>
     </v-sheet>
-    <Nuxt />
+    <Nuxt v-if="uploaded" />
     <v-spacer />
     <v-sheet
       tag="footer"
@@ -116,12 +119,40 @@
 </template>
 
 <script>
+
+import {
+  mapActions,
+  mapState
+} from 'vuex'
+
 export default {
   name: 'Layout',
   data () {
     return {
     }
-  }
+  },
+  computed: mapState('app', {
+    groups: state => state.groups,
+    uploaded: state => state.uploaded
+  }),
+  async mounted () {
+    await this.appInit()
+    this.$root.$on('routeChanged', () => {
+      const test = /(index)|(catalog)/.test(this.$route.name)
+      if (test) {
+        const group = this.$route.params.catalog
+        if (group) {
+          this.setGroup({ group })
+        } else {
+          this.setGroup({ group: this.groups[0] })
+        }
+      }
+    })
+  },
+  methods: mapActions('app', [
+    'appInit',
+    'setGroup'
+  ])
 }
 </script>
 
