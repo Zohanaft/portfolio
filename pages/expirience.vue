@@ -1,6 +1,6 @@
 <template>
   <v-container
-    class="pa-0"
+    class="pa-0 pb-10"
     tag="main"
     fluid
   >
@@ -47,39 +47,37 @@
 </template>
 
 <script>
-import {
-  mapState,
-  mapActions
-} from 'vuex'
+import { Api } from '~/middleware/api'
 
 export default {
-  name: 'Projects',
+  name: 'Expirience',
+  async asyncData ({ params, $axios, route }) {
+    const slug = route.name
+    const page = await $axios
+      .get(
+        new Api({
+          slug
+        }).genUrl('pages')
+      )
+    return { page: page.data.data[0] }
+  },
   data: () => {
     return {
       loaded: false
     }
   },
-  computed: {
-    ...mapState('pages', {
-      items: state => state.items
-    }),
-    page () {
-      return this.items[0]
+  watch: {
+    page: {
+      handler (val) {
+        this.setBody(this.page)
+      },
+      deep: true
     }
   },
-  async mounted () {
-    await this.customQuery({
-      reqObj: {
-        slug: 'expirience'
-      }
-    })
-    this.$refs.body.innerHTML = this.page.body
-    // this.$refs.body.innerHTML += this.page.body
-  },
   methods: {
-    ...mapActions('pages', [
-      'customQuery'
-    ])
+    setBody (page) {
+      this.$refs.body.innerHTML = page.body
+    }
   }
 }
 </script>
