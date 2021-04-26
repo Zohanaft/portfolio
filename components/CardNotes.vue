@@ -1,12 +1,12 @@
 <template>
   <nuxt-link
     class="card-notes"
-    :to="note.slug"
+    :to="`/${item.slug}`"
     style="display: flex;"
   >
     <div class="card-notes--image">
       <v-img
-        :src="note.image"
+        :src="item.image"
         position="center center"
         :contain="false"
         height="100%"
@@ -15,17 +15,17 @@
     <div class="card-notes--content-sheet" />
     <div class="card-notes--content-wrapper d-flex flex-column">
       <h2 class="card-notes--title d-flex">
-        {{ note.title }}
+        {{ item.title }}
       </h2>
       <v-spacer />
       <div class="card-notes--tags">
         <ul>
           <li
-            v-for="(tagname, index) in JSON.parse(note.tags)"
+            v-for="(tagname, index) in item.tags.split(',')"
             :key="index"
             class="card-notes--tags__item"
           >
-            {{ `| ${tag(tagname).replace(/(\[\s)|(\s\])/g,'')}` }}
+            {{ `| ${tagname.replace(/(\[\s)|(\s\])/g,'')}` }}
           </li>
         </ul>
       </div>
@@ -35,8 +35,8 @@
         <ul>
           <li>
             <a
-              :href="`http://www.facebook.com/sharer.php?s=100&p[url]=${location}/${note.slug}`"
-              @click.prevent="linkTo(`http://www.facebook.com/sharer.php?s=100&p[url]=${location}/${note.slug}`)"
+              :href="`http://www.facebook.com/sharer.php?s=100&p[url]=${location}/${item.slug}`"
+              @click.prevent="linkTo(`http://www.facebook.com/sharer.php?s=100&p[url]=${location}/${item.slug}`)"
             >
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="29" height="29" stroke="#00D1FF" />
@@ -46,8 +46,8 @@
           </li>
           <li>
             <a
-              :href="`https://vk.com/share.php?url=${location}/${note.slug}`"
-              @click.prevent="linkTo(`https://vk.com/share.php?url=${location}/${note.slug}`)"
+              :href="`https://vk.com/share.php?url=${location}/${item.slug}`"
+              @click.prevent="linkTo(`https://vk.com/share.php?url=${location}/${item.slug}`)"
             >
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="29" height="29" stroke="#00D1FF" />
@@ -57,8 +57,8 @@
           </li>
           <li>
             <a
-              :href="`http://twitter.com/share?text=${location}/${note.slug}`"
-              @click.prevent="linkTo(`http://twitter.com/share?text=${location}/${note.slug}`)"
+              :href="`http://twitter.com/share?text=${location}/${item.slug}`"
+              @click.prevent="linkTo(`http://twitter.com/share?text=${location}/${item.slug}`)"
             >
               <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="29" height="29" stroke="#00D1FF" />
@@ -78,7 +78,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'CardNotes',
   props: {
-    note: {
+    item: {
       type: Object,
       default: () => ({})
     }
@@ -112,6 +112,7 @@ export default {
   margin-bottom: 30px;
   position: relative;
   transition: all .5s ease-in-out;
+  width: 100%;
 
   &:hover {
     box-shadow: 0px 0px 40px $color-accent;

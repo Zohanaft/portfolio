@@ -17,6 +17,12 @@
   "LazyCardProject": {
     "description": "Auto imported from components/CardProject.vue"
   },
+  "ScrollToTop": {
+    "description": "Auto imported from components/ScrollToTop.vue"
+  },
+  "LazyScrollToTop": {
+    "description": "Auto imported from components/ScrollToTop.vue"
+  },
   "TagList": {
     "description": "Auto imported from components/TagList.vue"
   },

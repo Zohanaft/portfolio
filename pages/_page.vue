@@ -18,7 +18,7 @@
           cols="12"
         >
           <span class="page-type">
-            {{ type.get(page.type) }}
+            {{ group.title }}
           </span>
         </v-col>
         <v-col
@@ -103,11 +103,11 @@
           class="pa-0 pt-5"
         >
           <span
-            v-for="(tagname, index) in JSON.parse(page.tags)"
+            v-for="(tag, index) in page.tags.split(',')"
             :key="index"
             class="tag-list--item"
           >
-            {{ tag(tagname) }}
+            {{ tag }}
           </span>
         </v-col>
         <v-col
@@ -120,19 +120,17 @@
         </v-col>
         <v-col
           cols="12"
-          class="pa-0 d-flex flex-row flex-wrap"
+          class="pa-0 pb-16 d-flex flex-row flex-wrap"
         >
           <v-col
-            v-for="(item, index) in 3"
+            v-for="(item, index) in items"
             :key="index"
             cols="12"
             class="pa-0 col-lg-6 col-xl-4 py-0 px-0 justify-sm-center"
           >
             <component
-              :is="page.type === 'NOTE' ? 'card-notes' : 'card-projects'"
-              v-if="items[index]"
-              :note="items[index]"
-              :project="items[index]"
+              :is="group.view === 'NOTE' ? 'card-notes' : 'card-projects'"
+              :item="item"
             />
           </v-col>
         </v-col>
@@ -153,6 +151,7 @@ import CardProjects from '@/components/CardProject'
 import { Api } from '~/middleware/api'
 
 export default {
+  name: 'Page',
   components: {
     'card-notes': CardNotes,
     'card-projects': CardProjects
@@ -168,35 +167,51 @@ export default {
   },
   data: () => {
     return {
-      type: new Map([
-        ['PROJECT', '■ Проекты'],
-        ['NOTE', '■ Заметки']
-      ])
+      index: false
     }
   },
   computed: {
-    ...mapState('pages', {
-      items: state => state.items,
-      tagList: state => state.tags
+    ...mapState('app', {
+      group: state => state.group,
+      groups: state => state.groups
+    }),
+    ...mapState('catalog', {
+      tags: state => state.tags,
+      items: state => state.items
     })
   },
+  watch: {
+    selectedTags (val) {
+      const tags = val.toString()
+      this.setSelectedTags({ tags: tags.split(',') })
+    }
+  },
+  async created () {
+    const collection = this.page.collections.split(',')[0]
+    const group = this.groups.find(el => el.title === collection)
+
+    this.setGroup({ group })
+    this.clearSort()
+
+    this.setCollection({ collection: this.group.title })
+    this.setLimit({ limit: 3 })
+
+    await this.initCatalog()
+  },
   mounted () {
-    this.customQuery(
-      {
-        reqObj: {
-          type: this.page.type
-        }
-      }
-    )
     this.$refs.body.innerHTML = this.page.body
   },
   methods: {
-    ...mapActions('pages', [
-      'customQuery'
+    ...mapActions('catalog', [
+      'setCollection',
+      'setLimit',
+      'initCatalog',
+      'setSelectedTags',
+      'clearSort'
     ]),
-    tag (tag) {
-      return this.tagList.get(tag)
-    }
+    ...mapActions('app', [
+      'setGroup'
+    ])
   }
 }
 </script>
@@ -217,6 +232,17 @@ export default {
   font-size: 20px;
   line-height: 150%;
   color: $color-accent;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-color: $color-accent;
+    margin-right: 10px;
+  }
 }
 
 .page-text--title {

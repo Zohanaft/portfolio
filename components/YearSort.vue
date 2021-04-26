@@ -9,6 +9,7 @@
   >
     <select
       id="select-year"
+      v-model="yearCopy"
       name="select-year"
       @change="$emit('change', $event.target.value)"
     >
@@ -50,6 +51,16 @@ export default {
     center: {
       type: Boolean,
       default: false
+    }
+  },
+  data: () => {
+    return {
+      yearCopy: ''
+    }
+  },
+  watch: {
+    year (val) {
+      this.yearCopy = this.year
     }
   }
 }

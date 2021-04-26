@@ -4,6 +4,11 @@
     light
     data-app
   >
+    <scroll-to-top
+      v-scroll-to="{el: '#portfolio-app'}"
+      class="scroll-to-top"
+      :class="{ 'visible': mooved }"
+    />
     <v-sheet
       tag="header"
       class="light pa-0"
@@ -38,7 +43,7 @@
             </nuxt-link>
           </v-col>
           <v-col
-            class="logo--title mt-xl-15 mt-0 col-12 col-xl-9 py-0"
+            class="logo--title pl-11 pl-md-0 mt-xl-15 mt-0 col-12 col-xl-9 py-0"
             color="light darken-1"
           >
             <nuxt-link
@@ -90,28 +95,41 @@
           <v-col
             class="logo--image-wrapper col-12 col-xl-3 py-0"
           >
-            <v-sheet
-              class="logo--image mx-auto ma-0 mt-xl-15 mb-xl-15 mt-10 mb-5"
-              min-width="230px"
-              max-width="230px"
-              width="230px"
-              height="230px"
-              color="accent"
-              style="box-shadow: 0px 0px 20px #00D1FF;"
+            <nuxt-link
+              to="/"
             >
-              <div class="logo--description">
-                рони<br>
-                УРСУ
-              </div>
-            </v-sheet>
+              <v-sheet
+                class="logo--image mx-auto mr-xl-auto mx-xl-0 ma-0 mt-xl-15 mb-xl-15 mt-10 mb-5"
+                min-width="230px"
+                max-width="230px"
+                width="230px"
+                height="230px"
+                color="accent"
+                style="box-shadow: 0px 0px 20px #00D1FF;"
+              >
+                <div class="logo--description">
+                  рони<br>
+                  УРСУ
+                </div>
+              </v-sheet>
+            </nuxt-link>
           </v-col>
-          <v-col
+          <div
             class="logo--title mt-xl-15 mt-0 col-12 col-xl-9 py-0 pb-20"
             color="light darken-1"
           >
-            UX-аналитика, <br>
-            UX/UI-дизайн сайтов
-          </v-col>
+            <nuxt-link
+              to="/"
+            >
+              UX-аналитика, <br>
+              UX/UI-дизайн сайтов
+            </nuxt-link>
+            <Button
+              class="footer-mail-to mt-8"
+              title="[ Написать ]"
+              href="mailto:fivych@mail.ru"
+            />
+          </div>
         </v-row>
       </div>
     </v-sheet>
@@ -129,6 +147,7 @@ export default {
   name: 'Layout',
   data () {
     return {
+      mooved: false
     }
   },
   computed: mapState('app', {
@@ -146,6 +165,13 @@ export default {
         } else {
           this.setGroup({ group: this.groups[0] })
         }
+      }
+    })
+    addEventListener('scroll', (event) => {
+      if (window.pageYOffset > 200) {
+        this.mooved = true
+      } else {
+        this.mooved = false
       }
     })
   },
@@ -220,6 +246,29 @@ export default {
         padding-bottom: 0px;
       }
     }
+  }
+}
+
+.scroll-to-top {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 100;
+  transition: opacity .3s;
+}
+
+.visible {
+  opacity: 1;
+  transition: opacity .3s;
+}
+
+.footer-mail-to ::v-deep .primary-btn {
+  text-shadow: none;
+  color: $color-accent;
+  &::before {
+    content: none;
   }
 }
 </style>

@@ -30,11 +30,11 @@ export const actions = {
       new Api().genUrl('pages/groups')
     )
 
-    const query = this.$router.history.current.query
+    const query = this.$router.history.current.params
     let group = null
 
-    if (query.collections) {
-      group = groups.data.data.find(el => el.title === query.collections)
+    if (query.catalog) {
+      group = groups.data.data.find(el => String(el.id) === String(query.catalog))
     }
 
     if (!group) {

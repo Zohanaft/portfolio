@@ -41,6 +41,10 @@ export class Api extends Request {
     this.location = 'http://roniursu/api/'
   }
 
+  setRequestObect (obj) {
+    this.requestObject = obj
+  }
+
   getLocation () {
     return this.location
   }

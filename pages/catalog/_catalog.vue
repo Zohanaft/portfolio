@@ -7,83 +7,66 @@
       class="mx-md-n3 mx-0"
     >
       <v-col
-        cols="12"
-      >
-        <div class="page-text intro">
-          <h1 class="page-text--title">
-            Метод работы
-          </h1>
-          <p class="page-text--text">
-            Предпочитаю командную игру. Не боюсь ошибок — исправить их легко, а нового без них не создать. Дохну от рутины. Продукт должен работать, а кнопки после покрасим. Придерживаюсь понятия “Клиент не может быть прав, он не специалист. Но у него вся нужная информация”.
-          </p>
-        </div>
-      </v-col>
-      <v-col
-        class="py-0 d-flex justify-end justify-sm-start"
-        cols="12"
-      >
-        <Button
-          title="[ Написать ]"
-          href="mailto:fivych@mail.ru"
-        />
-      </v-col>
-      <v-col
-        class="py-0 section-wrapper"
+        class="py-0 section-wrapper pt-16 pb-5"
         cols="12"
       >
         <div class="d-flex flex-row align-center flex-wrap">
           <h2 class="page-text--title d-flex">
             {{ group.title }}
           </h2>
-          <!--
           <TagList
-            v-model="selectedProjectTags"
-            :tags="projectTags"
+            v-if="tags"
+            v-model="selectedTags"
+            :tags="tags"
           />
-          -->
-          <!--
           <YearSort
-            v-model="year"
+            v-model="cYear"
             class="pb-3"
-            :year-list="yearList"
+            :year-list="years"
             right
           />
-          -->
         </div>
       </v-col>
-      <!--
       <v-col
-        v-for="(project, index) in items"
+        v-for="(item, index) in items"
         :key="index"
         cols="12"
-        class="col-md-6 col-lg-4 py-0 justify-sm-center"
+        class="col-lg-4 col-sm-6 py-0 d-flex justify-center"
       >
-        <CardProject
-          :project="project"
+        <component
+          :is="group.view === 'NOTE' ? 'card-notes' : 'card-projects'"
+          :item="item"
         />
       </v-col>
-      -->
       <v-col
         cols="12"
         class="d-flex flex-row justify-end align-baseline flex-wrap"
       >
-        <!--
+        <YearSort
+          v-model="cYear"
+          class="pb-3"
+          :year-list="years"
+          left
+        />
         <TagList
           v-if="$vuetify.breakpoint.mdAndUp"
-          v-model="selectedProjectTags"
-          :tags="projectTags"
+          v-model="selectedTags"
+          :tags="tags"
         />
         <Button
+          v-if="!(items.length % step)"
           class="pl-5"
-          :title="$vuetify.breakpoint.smAndDown ? '[ Проекты ]' : '[ Все проекты ]'"
-          @click="loadMore()"
+          :title="$vuetify.breakpoint.mdAndUp ? 'Загрузить еще' : 'Еще'"
+          @click="addItems"
         />
-        -->
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
+
+import CardNotes from '@/components/CardNotes'
+import CardProjects from '@/components/CardProject'
 
 import {
   mapState,
@@ -92,19 +75,47 @@ import {
 
 export default {
   name: 'CatalogPage',
+  components: {
+    'card-notes': CardNotes,
+    'card-projects': CardProjects
+  },
   data: () => {
     return {
-      index: false
+      index: false,
+      selectedTags: [],
+      year: ''
     }
   },
   computed: {
     ...mapState('app', {
       group: state => state.group
-    })
+    }),
+    ...mapState('catalog', {
+      tags: state => state.tags,
+      items: state => state.items,
+      years: state => state.years,
+      step: state => state.step
+    }),
+    cYear: {
+      get () { return this.year },
+      set (val) { this.year = val }
+    }
+  },
+  watch: {
+    selectedTags (val) {
+      const tags = val.toString()
+      this.setSelectedTags({ tags: tags.split(',') })
+    },
+    year (val) {
+      this.setYear({ year: val })
+    }
   },
   async created () {
+    this.clearSort()
+
     this.setCollection({ collection: this.group.title })
-    this.setTags({ tags: this.group.tags })
+    this.setTags({ tags: this.group.tags.split(',') })
+
     await this.initCatalog()
   },
   methods: {
@@ -112,7 +123,10 @@ export default {
       'setCollection',
       'setTags',
       'setSelectedTags',
-      'initCatalog'
+      'initCatalog',
+      'setYear',
+      'clearSort',
+      'addItems'
     ])
   }
 }

@@ -1,19 +1,19 @@
 <template>
   <nuxt-link
     class="card-project mx-sm-auto"
-    :to="project.slug"
+    :to="`/${item.slug}`"
   >
     <div class="card-project--header d-flex">
       <h2 class="card-project--title d-flex">
-        {{ project.title }}
+        {{ item.title }}
       </h2>
       <span class="card-project--year">
-        {{ project.year }}
+        {{ item.year }}
       </span>
     </div>
     <div class="card-project--image">
       <v-img
-        :src="project.image"
+        :src="item.image"
         style="height: 353px;"
         position="center center"
       />
@@ -25,7 +25,7 @@
 export default {
   name: 'CardProject',
   props: {
-    project: {
+    item: {
       type: Object,
       default: () => ({})
     }
@@ -43,6 +43,7 @@ export default {
   transition: all .5s ease-in-out;
   display: block;
   margin-bottom: 10px;
+  width: 100%;
 
   @media (min-width: 800px) {
     margin-bottom: 30px;

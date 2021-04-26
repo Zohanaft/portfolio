@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-list d-flex">
+  <div class="tag-list d-flex flex-wrap">
     <a
       v-for="(tag) in tags"
       :key="tag"

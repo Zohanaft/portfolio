@@ -3,8 +3,15 @@
     class="primary-btn--wrapper"
     @click="$emit('click')"
   >
+    <nuxt-link
+      v-if="to"
+      :to="to"
+      class="primary-btn"
+    >
+      {{ title }}
+    </nuxt-link>
     <a
-      v-if="!href"
+      v-else-if="!href"
       alt="Написать"
       class="primary-btn"
     >
@@ -32,6 +39,10 @@ export default {
     title: {
       type: String,
       default: 'Кнопка'
+    },
+    to: {
+      type: String,
+      default: null
     }
   }
 }
